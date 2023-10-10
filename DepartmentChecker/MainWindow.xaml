@@ -1,0 +1,50 @@
+﻿<Window x:Class="DepartmentChecker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <ComboBox Name="FilterMethodDropdown" Width="120" Height="30" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <ListView Name="TagCheckboxes" Width="120" Height="100" Margin="10,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <ComboBox Name="DepartmentDropdown" Width="120" Height="30" Margin="10,160,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <CheckBox Name="CadreCheckbox" Content="Cadre" Width="120" Height="30" Margin="10,190,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Button Name="SearchButton" Content="Search" Width="80" Height="30" Margin="10,220,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="SearchButton_Click"/>
+        <Label Name="StopwatchLabel" Content="0.00.00" Width="80" Height="30" Margin="10,260,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Button Name="RegenerateButton" Content="Regenerate" Width="80" Height="30" Margin="10,300,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="RegenerateButton_Click"/>
+        <TextBox Name="DepartmentCountTextbox" Text="Departments" Width="80" Height="30" Margin="10,330,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBox>
+        <TextBox Name="TrainingCountTextbox" Text="trainings" Width="80" Height="30" Margin="10,360,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBox>
+        <ListView Name="DatasetView" Margin="150,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Training Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding TrainingName}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Tags">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding TagsAsString}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="TargetAudience">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding TargetAudienceAsString}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="TargetAudienceMandatory">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding TargetAudienceMandatoryAsString}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
