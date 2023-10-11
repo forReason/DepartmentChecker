@@ -13,7 +13,6 @@ namespace Helpers_NS
         {
 
             // this is a generation for all tags in the dataset. presumably to fill the filter list
-            // add is not thread safe(!)
             HashSet<string> tags = new HashSet<string>();
             department = WebUtility.HtmlDecode(department).Replace(' ', '\u00A0');
 
@@ -22,7 +21,6 @@ namespace Helpers_NS
             {
                 foreach (var tag in item.Tags)
                 {
-                    // not thread safe (!) - in c#, javascrpt doesnt use multithreading anyways
                     tags.Add(WebUtility.HtmlDecode(tag));
                 }
 
@@ -38,8 +36,7 @@ namespace Helpers_NS
             }
 
             // normalize all relevant columns of all records
-            //await Task.WhenAll(items.Select(item => ProcessItem(item))); // multithreaded
-            foreach (var item in items) await ProcessItem(item); // like javascript
+            await Task.WhenAll(items.Select(item => ProcessItem(item))); // single threaded (!)
 
             // filter dataset
             var cadreItems = items.Where(item => item.IsCadre).ToList();

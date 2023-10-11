@@ -19,8 +19,8 @@ namespace Helpers_NS
             department = WebUtility.HtmlDecode(department).Replace(' ', '\u00A0');
 
             // normalize all relevant columns of the dataset entry
-            Dictionary<string,string> precomputations = new Dictionary<string,string>();
-            string computation;
+            Dictionary<string,string> decodeCache = new Dictionary<string,string>();
+            string reservedComputationMemory;
             foreach (CatalogItem item in items)
             {
                 foreach(string tag in item.Tags)
@@ -32,20 +32,19 @@ namespace Helpers_NS
                 {
                     catalogItems.Add(item);
                     if (item.ForAllMandatory) catalogItems.Add(item); // for all?
-                    else
+                    else // check if department applicable
                     {
-                        // check if department applicable
                         for (int i = 0; i < item.TargetAudienceMandatory.Count; i++)
                         {
                             if (item.TargetAudienceMandatory[i].Length >= departmentLength
                                 && item.TargetAudienceMandatory[i].Length <= doubleDepartmentLength) // performance optimizing pre-check
                             {
-                                if (!precomputations.TryGetValue(item.TargetAudienceMandatory[i], out computation)) // lazy decode
+                                if (!decodeCache.TryGetValue(item.TargetAudienceMandatory[i], out reservedComputationMemory)) // lazy decode (optional, + ~50%)
                                 {
-                                    computation = WebUtility.HtmlDecode(item.TargetAudienceMandatory[i]);
-                                    precomputations[item.TargetAudienceMandatory[i]] = computation;
+                                    reservedComputationMemory = WebUtility.HtmlDecode(item.TargetAudienceMandatory[i]);
+                                    decodeCache[item.TargetAudienceMandatory[i]] = reservedComputationMemory;
                                 }
-                                if (department == computation) // department comparison
+                                if (department == reservedComputationMemory) // department comparison
                                 {
                                     filteredItems.Add(item);
                                     break;
